@@ -49,6 +49,8 @@ npm run lint
 ## Todos
 * fix self referencing relations. right now the relation goes behind the node and is unusable.
 * fix multiple duplicate relations. right now they all overlap and render the functionality useless. they should each stack on top of each other.
+* add delete relation option
+* change relation node style so that the relation text is only inside the node and on hover the action icons (edit, delete) appear on top of the node and not inside so that they don't change the width of the node.
 * add different edge styles so the user can choose.
 * add application settings
 * add project options (name, architecture, db, etc)
