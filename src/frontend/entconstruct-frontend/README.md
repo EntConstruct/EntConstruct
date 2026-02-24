@@ -46,3 +46,9 @@ npm run build
 ```sh
 npm run lint
 ```
+## Todos
+* fix self referencing relations. right now the relation goes behind the node and is unusable.
+* fix multiple duplicate relations. right now they all overlap and render the functionality useless. they should each stack on top of each other.
+* add different edge styles so the user can choose.
+* add application settings
+* add project options (name, architecture, db, etc)
