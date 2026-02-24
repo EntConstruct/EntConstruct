@@ -54,3 +54,4 @@ npm run lint
 * add different edge styles so the user can choose.
 * add application settings
 * add project options (name, architecture, db, etc)
+* after all of these, move on to the contract between front and back. 
