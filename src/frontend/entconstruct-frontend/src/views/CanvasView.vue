@@ -1,12 +1,28 @@
 <script setup lang="ts">
-import { VueFlow } from '@vue-flow/core'
+import { VueFlow, ConnectionMode } from '@vue-flow/core'
 import type { Node } from '@vue-flow/core'
+import { useVueFlow } from '@vue-flow/core'
 import type { EntityNodeData } from '@/types/entity'
+import type { EntityRelationshipData } from '@/types/relationship'
 import EntityNode from '@/components/canvas/EntityNode.vue'
+import EntityEdge from '@/components/canvas/EntityEdge.vue'
 import EntityEditorPanel from '@/components/panels/EntityEditorPanel.vue'
+import RelationshipEditorPanel from '@/components/panels/RelationshipEditorPanel.vue'
 import AppSidebar from '@/components/AppSidebar.vue'
 
 const nodeTypes = { entityNode: EntityNode }
+const edgeTypes = { entityEdge: EntityEdge }
+
+const { onConnect, addEdges } = useVueFlow('main-canvas')
+
+onConnect((connection) => {
+  addEdges([{
+    ...connection,
+    id: crypto.randomUUID(),
+    type: 'entityEdge',
+    data: { type: 'one-to-many' } satisfies EntityRelationshipData,
+  }])
+})
 
 const initialNodes: Node<EntityNodeData>[] = [
   {
@@ -33,10 +49,13 @@ const initialNodes: Node<EntityNodeData>[] = [
         id="main-canvas"
         :nodes="initialNodes"
         :node-types="nodeTypes"
+        :edge-types="edgeTypes"
+        :connection-mode="ConnectionMode.Loose"
         fit-view-on-init
       />
     </div>
     <EntityEditorPanel />
+    <RelationshipEditorPanel />
   </div>
 </template>
 

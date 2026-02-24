@@ -14,10 +14,19 @@ const isHovered = ref(false)
 <template>
   <div
     class="entity-node"
+    :class="{ 'entity-node--hovered': isHovered }"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <Handle type="target" :position="Position.Top" />
+    <!-- All 4 sides get a source + target handle so connections can originate/terminate anywhere -->
+    <Handle id="top-s"    type="source" :position="Position.Top"    class="entity-node__handle" />
+    <Handle id="top-t"    type="target" :position="Position.Top"    class="entity-node__handle" />
+    <Handle id="right-s"  type="source" :position="Position.Right"  class="entity-node__handle" />
+    <Handle id="right-t"  type="target" :position="Position.Right"  class="entity-node__handle" />
+    <Handle id="bottom-s" type="source" :position="Position.Bottom" class="entity-node__handle" />
+    <Handle id="bottom-t" type="target" :position="Position.Bottom" class="entity-node__handle" />
+    <Handle id="left-s"   type="source" :position="Position.Left"   class="entity-node__handle" />
+    <Handle id="left-t"   type="target" :position="Position.Left"   class="entity-node__handle" />
 
     <div class="entity-node__header">
       <span class="entity-node__name">{{ props.data.name || 'Unnamed Entity' }}</span>
@@ -45,8 +54,6 @@ const isHovered = ref(false)
         No properties
       </div>
     </div>
-
-    <Handle type="source" :position="Position.Bottom" />
   </div>
 </template>
 
@@ -58,6 +65,16 @@ const isHovered = ref(false)
   min-width: 200px;
   font-size: 13px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Handles: faint by default, visible when node is hovered */
+.entity-node :deep(.entity-node__handle) {
+  opacity: 0.25;
+  transition: opacity 0.15s;
+}
+
+.entity-node--hovered :deep(.entity-node__handle) {
+  opacity: 1;
 }
 
 .entity-node__header {
